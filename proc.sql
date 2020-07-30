@@ -1,3 +1,6 @@
+CREATE OR REPLACE PROCEDURE procapp() 
+LANGUAGE plpgsql
+ AS $$
 BEGIN
        
        update pa
@@ -9,4 +12,4 @@ BEGIN
 	   insert into public.tblapp(appid,appname,startdate,enddate)
 	   select appid,appname,now(),null from f.tblapp;
 	   
-	END; 
+	END; $$
