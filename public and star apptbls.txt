@@ -1,0 +1,23 @@
+
+
+CREATE SEQUENCE tblapp_idd_seq;
+CREATE SEQUENCE tblapp_idd_seq1;
+
+
+CREATE TABLE IF NOT EXISTS public.tblapp
+(	idd integer NOT NULL DEFAULT nextval('tbltblapp_idd_seq'::regclass),
+    appid integer NOT NULL,
+    appname character varying(20) NOT NULL,
+    CONSTRAINT tblapp_pkey PRIMARY KEY (idd)
+);
+
+CREATE TABLE IF NOT EXISTS star.tblapp
+(
+    idd integer NOT NULL DEFAULT nextval('tblapp_idd_seq1'::regclass),
+    appid integer NOT NULL,
+    appname character varying(20) NOT NULL,
+    startdate timestamp without time zone,
+    enddate timestamp without time zone,
+    updateon timestamp without time zone,
+    CONSTRAINT tblapp_pkey PRIMARY KEY (idd)
+)
