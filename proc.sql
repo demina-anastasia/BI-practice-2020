@@ -22,15 +22,17 @@ AS $BODY$BEGIN
 
 ниже измененный мною вариант
 
-	BEGIN
-       
-       update pa
-	   set pa.appname=fa.appname
-	   from public.tblapp as pa
-       inner join f.tblapp as fa 
-	   on pa.appid=fa.appid;
-       
-	   insert into public.tblapp(appid,appname,startdate,enddate)
-	   select appid,appname,now(),null from f.tblapp;
+BEGIN
+  
 	   
-	END; 
+	  update star.tblapp sa
+	set 
+	enddate = now()
+	from public.tblapp pa
+	where (sa.appid=pa.appid and sa.enddate is null)  and  (pa.updateon>now()-INTERVAL '2 DAY' or NULL);
+	   
+	   insert into star.tblapp(appid,appname,startdate,enddate,updateon)
+	   select appid,appname,now(),null,now() from public.tblapp pp
+	   where not exists (select 1 from star.tblapp ss where ss.appid = pp.appid and ss.enddate is null ) ;
+	   
+	END;
